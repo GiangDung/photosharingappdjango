@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Login/Regiser</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <style>
+        .login--wrapper {
+            display: flex;
+            align-items: center;
+            height: 80vh;
+            justify-content: center;
+        }
+
+        .form {
+            width: 500px;
+        }
+        body{
+            background-color: #fff;
+            color: #000;
+        }
+        h1{
+            font-size: 5rem;
+            color: #000;
+        }
+        a{
+            color: #000;
+        }
+        .custom-button{
+            background-color: #fff;
+            font-size: 1rem;
+            color: black;
+            padding: 10px 20px 10px 20px;
+            border-color: #000;
+            border-radius: 5px;
+            color: #000
+        }
+    </style>
+</head>
+
+<body>
+    {% extends 'base.html' %}
+    {% block mycontent%}
+    <div class="container">
+
+        <div class="login--wrapper">
+
+            {% if page == 'login' %}
+            <form method='post' class="form">
+                {% csrf_token %}
+                <h1>Login</h1>
+                <h4>Login to view photos and share with your friends</h4>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Username</label>
+                    <input type="text" class="form-control" name="username" id="exampleInputEmail1"
+                        aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+                </div>
+
+                <button type="submit" class="custom-button">Submit</button>
+                <p>Don't have an account <a href="{% url 'register' %}">Register</a></p>
+            </form>
+            {% else %}
+            <form method='post' class="form">
+                <h1>Register</h1>
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">{{field.label}}</label>
+                    {{field}}
+                </div>
+                {% endfor %}
+                <button type="submit" class="custom-button">Submit</button>
+                <p>Already have an account <a href="{% url 'login' %}">Login</a></p>
+
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
+    {% endblock %}
+</body>
+
+</html>
